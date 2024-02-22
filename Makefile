@@ -2,7 +2,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 NAME = a.out
-SRC = main.c get_next_line_utils.c
+SRC = main.c
 OBJ = $(SRC:.c=.o)
 LIBFT = libft/libft.a
 MLX = .mlx/libmlx.a
@@ -29,7 +29,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	make -C libft fclean
-	make -C .mlx fclean
+	make -C .mlx clean
 
 re: fclean all
 
