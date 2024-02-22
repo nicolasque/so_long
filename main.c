@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 18:43:00 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/22 19:50:50 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,57 @@ int	ft_get_map_h_w(t_game *game)
 
 	line = get_next_line(game->map_fd); //MEMEORIA PARA LIBERAR (menos en la comprobacion de abajo)
 	if (!line)
-		return (printf("aaaaa"), free(game), -1);
+		return (ft_printf("Invalid map"), free(game), -1);
 	game->map_with = ft_map_whith(line);
 	game->map_heigth = 0;
 	while (line)
 	{
 		if (game->map_with != ft_map_whith(line)) // si una linea es de tro tamaño paramos el programa
-			return (printf("bbbbb"), free(line), free(game), -1); // LIVERO aqui GAME
+			return (ft_printf("Invalid map"), free(line), free(game), -1); // LIVERO aqui GAME
 		game->map_heigth ++;
 		line = get_next_line(game->map_fd);
 		if (!line)
 			return (0);
 	}
 	close (game->map_fd); //Despues de "medir" el arrchivo lo cerramos para abrirlo de uevo a la ora de leer
+	free(line);
 	return (0);
+}
+
+int ft_free_2d(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free (arr[i]);
+		i++;
+	}
+	return (free(arr), 0);
+}
+
+void	ft_print_map(t_game *game)
+{
+	
+}
+
+int	ft_get_map_char(t_game *game) 
+{
+	int		i;
+
+	game->map_fd = open(game->map_url, O_RDONLY);
+	if (game->map_fd == -1)
+		return (free(game), -1);
+	game->map = (char **)malloc(sizeof(char *) * game->map_heigth);
+	if (!game->map)
+		return (free(game), -1);// APARTIR DE AQUI AY QUE LIVERAR GAME->MAP*
+	i = 0;
+	while (i < game->map_heigth)
+	{
+		game->map[i] = get_next_line(game->map_fd);
+	}
+	
 }
 
 int	main(int argc, char **argv)
@@ -70,8 +107,13 @@ int	main(int argc, char **argv)
 	if (ft_manage_input(argc, argv, game) == -1)
 		return (-1);
 	if (ft_get_map_h_w(game) == -1)
-		return (ft_printf("Problema con get map (de momento solo h/w)"));
-	
+		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
+	if (ft_get_map_char(game) == -1)
+		return (ft_printf("Geting the map has fail"), -1);
+	printf("Anco del mapa: %i\n", game->map_with);
+	printf("Alto del mapa: %i\n", game->map_heigth);
+	printf("Estado del fd: %i\n", game->map_fd);
+	printf("Direcion del fd: %s\n", game->map_url);
 	
 }
 
@@ -80,7 +122,3 @@ int	main(int argc, char **argv)
 
 
 //BATERIA DE COMPROBACIONES 
-	// printf("Anco del mapa: %i\n", game->map_with);
-	// printf("Alto del mapa: %i\n", game->map_heigth);
-	// printf("Estado del fd: %i\n", game->map_fd);
-	// printf("Direcion del fd: %s\n", game->map_url);
