@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 16:57:38 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:34:05 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include ".mlx/mlx.h"
 # include "libft/libft.h"
 
-typedef struct game_info
+typedef struct t_game
 {
 	char	**map;
+	char	*map_url;
 	int		x;
 	int		y;
-}	t_game_info;
+}	t_game;
 
 #endif //SO_LONG_H
