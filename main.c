@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 19:50:50 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/22 20:00:29 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,14 @@ int ft_free_2d(char **arr)
 
 void	ft_print_map(t_game *game)
 {
+	int i;
+	
+	i = 0;
+	while (game->map[i])
+	{
+		ft_printf("%s",game->map[i]);
+		i++;
+	}
 	
 }
 
@@ -88,15 +96,17 @@ int	ft_get_map_char(t_game *game)
 	game->map_fd = open(game->map_url, O_RDONLY);
 	if (game->map_fd == -1)
 		return (free(game), -1);
-	game->map = (char **)malloc(sizeof(char *) * game->map_heigth);
+	game->map = (char **)malloc(sizeof(char *) * game->map_heigth + 1);
 	if (!game->map)
 		return (free(game), -1);// APARTIR DE AQUI AY QUE LIVERAR GAME->MAP*
 	i = 0;
-	while (i < game->map_heigth)
+	while (i <= game->map_heigth)
 	{
 		game->map[i] = get_next_line(game->map_fd);
+		i++;
 	}
-	
+	ft_print_map(game);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -110,10 +120,10 @@ int	main(int argc, char **argv)
 		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
 	if (ft_get_map_char(game) == -1)
 		return (ft_printf("Geting the map has fail"), -1);
-	printf("Anco del mapa: %i\n", game->map_with);
-	printf("Alto del mapa: %i\n", game->map_heigth);
-	printf("Estado del fd: %i\n", game->map_fd);
-	printf("Direcion del fd: %s\n", game->map_url);
+	// printf("Anco del mapa: %i\n", game->map_with);
+	// printf("Alto del mapa: %i\n", game->map_heigth);
+	// printf("Estado del fd: %i\n", game->map_fd);
+	// printf("Direcion del fd: %s\n", game->map_url);
 	
 }
 
