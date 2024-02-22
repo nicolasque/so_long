@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 17:34:05 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:13:27 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ typedef struct t_game
 {
 	char	**map;
 	char	*map_url;
+	int		map_fd;
+
+	int		map_heigth;
+	int		map_with;
+
 	int		x;
 	int		y;
 }	t_game;
