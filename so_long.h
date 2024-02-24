@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/24 19:06:14 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:26:01 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include ".mlx/mlx.h"
 # include "libft/libft.h"
 
-typedef struct t_game //maloqueado
+typedef struct t_game //maloqueado desde el inicio
 {
-	char	**map; //maloqueado
+	char	**map; //maloqueado desde que se lee el mapa enn FT_GET_MAP_CHAR
 	char	*map_url; 
 	int		map_fd;
 

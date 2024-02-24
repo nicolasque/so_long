@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/24 19:18:31 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:39:14 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,31 @@ int	ft_get_map_h_w(t_game *game)
 	return (0);
 }
 
-int	ft_verify_map_chars(t_game game)
+int ft_is_valid_char(int c) // 0 si todo bien -1  si caracter no valido 
 {
-	int i;
+	if (c == 'P' || c == 'E' || c == 'C' || c == '0' || c == '1' || c == '\n')
+		return (0);
+	return (-1);
+}
 
-	
+int	ft_verify_invalid_map_chars(t_game *game) 
+{
+	int x;
+	int	y;
+
+	x = 0;	
+	while (game->map[x])
+	{
+		y = 0;
+		while (game->map[x][y])
+		{
+			if (ft_is_valid_char(game->map[x][y]))
+				return (ft_free_2d(game->map), free(game),ft_printf("Invalid character in map") , -1);
+			y ++;
+		}
+		x ++;
+	}
+	return (0);
 }
 
 int ft_count_objects_line(char *str, char c_object)
@@ -176,6 +196,7 @@ int	main(int argc, char **argv)
 	if (ft_get_map_char(game) == -1)
 		return (ft_printf("Geting the map has fail"), -1);
 
+	ft_verify_invalid_map_chars(game);
 
 	printf("Coins: %i \n", game->coins_count);
 	printf("Player: %i \n", game->player_count);
