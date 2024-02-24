@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 18:13:27 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:06:14 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include ".mlx/mlx.h"
 # include "libft/libft.h"
 
-typedef struct t_game
+typedef struct t_game //maloqueado
 {
-	char	**map;
-	char	*map_url;
+	char	**map; //maloqueado
+	char	*map_url; 
 	int		map_fd;
 
 	int		map_heigth;
@@ -32,6 +32,11 @@ typedef struct t_game
 
 	int		x;
 	int		y;
+
+
+	int coins_count;
+	int exit_count;
+	int player_count;	
 }	t_game;
 
 #endif //SO_LONG_H
