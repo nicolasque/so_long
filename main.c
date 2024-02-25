@@ -6,12 +6,11 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/25 21:01:31 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:34:01 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 int	ft_manage_input(int argc, char **argv, t_game *game)
 {
@@ -227,7 +226,21 @@ void	ft_flood_fill(t_game *game, int x, int y)
 	ft_flood_fill(game, x, y + 1);
 	ft_flood_fill(game, x - 1, y);
 	ft_flood_fill(game, x + 1, y);
-} //TODO, INTENTAR QUE ETA MIENDA FUNCIONE
+}
+
+int	ft_check_after_flod(t_game *game)
+{
+	int	x;
+
+	x = 0;
+	while (game->map_cpy)
+	{
+		if (ft_count_objects_line(game->map_cpy[x], 'C') || \
+		ft_count_objects_line(game->map_cpy[x], 'P') || \
+		ft_count_objects_line(game->map_cpy[x], 'E'))
+			return (-1); //TODO CERRAR COPY MAP Y GAME	
+	}
+}
 
 
 int	main(int argc, char **argv)
@@ -249,16 +262,16 @@ int	main(int argc, char **argv)
 	ft_map_copy(game);
 	ft_print_map(game->map_cpy);
 	ft_printf("\n");
-	printf("Player position x: %i\n", game->player_pos[0]);
-	printf("Player position y: %i\n", game->player_pos[1]);
-	printf("Alto del mapa: %i\n", game->map_heigth);
-	printf("Anco del mapa: %i\n", game->map_with);
 	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
 	ft_print_map(game->map_cpy);
 
 	printf("Coins: %i \n", game->coins_count);
 	printf("Player: %i \n", game->player_count);
 	printf("Exit no : %i \n", game->exit_count);
+	printf("Player position x: %i\n", game->player_pos[0]);
+	printf("Player position y: %i\n", game->player_pos[1]);
+	printf("Alto del mapa: %i\n", game->map_heigth);
+	printf("Anco del mapa: %i\n", game->map_with);
 	
 	printf("Estado del fd: %i\n", game->map_fd);
 	printf("Direcion del fd: %s\n", game->map_url);
