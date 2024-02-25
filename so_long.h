@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/25 18:09:47 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 19:45:42 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct t_game //maloqueado desde el inicio
 {
 	char	**map; //maloqueado desde que se lee el mapa enn FT_GET_MAP_CHAR
+	char	**map_cpy;
 	char	*map_url; 
 	int		map_fd;
 

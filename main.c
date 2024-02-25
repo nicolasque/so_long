@@ -6,11 +6,12 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/25 18:32:22 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 20:26:10 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 
 int	ft_manage_input(int argc, char **argv, t_game *game)
 {
@@ -148,14 +149,14 @@ void	ft_count_objects_map(t_game *game)
 }
 
 
-void	ft_print_map(t_game *game)
+void	ft_print_map(char **map)
 {
 	int i;
 	
 	i = 0;
-	while (game->map[i])
+	while (map[i])
 	{
-		ft_printf("%s",game->map[i]);
+		ft_printf("%s", map[i]);
 		i++;
 	}
 	
@@ -205,12 +206,24 @@ void	ft_get_player_position(t_game *game)
 	}
 }
 
-int	ft_flood_fill(t_game *game)
+void	ft_map_copy(t_game *game)
 {
-	char **map_cpy;
+	game->map_cpy = ft_get_map_char(game);
+}
 
-	map_cpy = ft_get_map_char(game);
-	
+void	ft_flood_fill(t_game *game, int x, int y)
+{
+	// ft_printf("char: %c\n", game->map_cpy[x][y]);
+	if (x >= game->map_heigth || y >= game->map_with || x < 0 || y < 0)
+		return ;
+	if (game->map_cpy[x][y] == '0' || game->map_cpy[x][y] == 'P' || game->map_cpy[x][y] == 'E' || game->map_cpy[x][y] == 'C')
+		game->map_cpy[x][y] = 'x';
+	if (game->map_cpy[x][y] == '1' || game->map_cpy[x][y] == 'x')
+		return ;
+	ft_flood_fill(game, x - 1, y);
+	ft_flood_fill(game, x + 1, y);
+	ft_flood_fill(game, x, y - 1);
+	ft_flood_fill(game, x, y + 1);
 }
 
 int	main(int argc, char **argv)
@@ -228,7 +241,9 @@ int	main(int argc, char **argv)
 	ft_count_objects_map(game);
 	ft_verify_invalid_map_chars(game);
 	ft_get_player_position(game);
-	
+	ft_map_copy(game);
+	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
+	ft_print_map(game->map_cpy);
 
 	printf("Coins: %i \n", game->coins_count);
 	printf("Player: %i \n", game->player_count);
