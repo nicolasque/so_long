@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/25 20:26:10 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 21:01:31 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,16 @@ int	ft_verify_invalid_map_chars(t_game *game)
 	while (game->map[x])
 	{
 		y = 0;
-		while (game->map[x][y])
+		while (game->map[x][y] && game->map[x][y] != '\n')
 		{
 			if (ft_is_valid_char(game->map[x][y]))
 				return (ft_free_2d(game->map), free(game),ft_printf("Invalid character in map") , -1);
+			if (game->map[0][y] != '1' || game->map[game->map_heigth - 1][y] != '1')
+				return (ft_free_2d(game->map), free(game),ft_printf("No proper border") , -1);
 			y ++;
 		}
+			if (game->map[x][0] != '1' || game->map[x][game->map_with - 1] != '1')
+				return (ft_free_2d(game->map), free(game),ft_printf("No proper border") , -1);
 		x ++;
 	}
 	return (0);
@@ -213,18 +217,18 @@ void	ft_map_copy(t_game *game)
 
 void	ft_flood_fill(t_game *game, int x, int y)
 {
-	// ft_printf("char: %c\n", game->map_cpy[x][y]);
-	if (x >= game->map_heigth || y >= game->map_with || x < 0 || y < 0)
+	if (x >= game->map_heigth || y >= game->map_with || x <= 0 || y <= 0 || game->map_cpy[x][y] == 'x')
 		return ;
 	if (game->map_cpy[x][y] == '0' || game->map_cpy[x][y] == 'P' || game->map_cpy[x][y] == 'E' || game->map_cpy[x][y] == 'C')
 		game->map_cpy[x][y] = 'x';
-	if (game->map_cpy[x][y] == '1' || game->map_cpy[x][y] == 'x')
+	if (game->map_cpy[x][y] == '1')
 		return ;
-	ft_flood_fill(game, x - 1, y);
-	ft_flood_fill(game, x + 1, y);
 	ft_flood_fill(game, x, y - 1);
 	ft_flood_fill(game, x, y + 1);
-}
+	ft_flood_fill(game, x - 1, y);
+	ft_flood_fill(game, x + 1, y);
+} //TODO, INTENTAR QUE ETA MIENDA FUNCIONE
+
 
 int	main(int argc, char **argv)
 {
@@ -239,9 +243,16 @@ int	main(int argc, char **argv)
 	if (!game->map)
 		return (ft_printf("Problem geting the map"), -1);
 	ft_count_objects_map(game);
-	ft_verify_invalid_map_chars(game);
+	if (ft_verify_invalid_map_chars(game) == -1)
+		return (-1);
 	ft_get_player_position(game);
 	ft_map_copy(game);
+	ft_print_map(game->map_cpy);
+	ft_printf("\n");
+	printf("Player position x: %i\n", game->player_pos[0]);
+	printf("Player position y: %i\n", game->player_pos[1]);
+	printf("Alto del mapa: %i\n", game->map_heigth);
+	printf("Anco del mapa: %i\n", game->map_with);
 	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
 	ft_print_map(game->map_cpy);
 
@@ -249,12 +260,8 @@ int	main(int argc, char **argv)
 	printf("Player: %i \n", game->player_count);
 	printf("Exit no : %i \n", game->exit_count);
 	
-	printf("Anco del mapa: %i\n", game->map_with);
-	printf("Alto del mapa: %i\n", game->map_heigth);
 	printf("Estado del fd: %i\n", game->map_fd);
 	printf("Direcion del fd: %s\n", game->map_url);
-	printf("Player position x: %i\n", game->player_pos[0]);
-	printf("Player position y: %i\n", game->player_pos[1]);
 
 	
 }
