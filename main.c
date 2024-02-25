@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/24 19:39:14 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:32:22 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,27 +162,56 @@ void	ft_print_map(t_game *game)
 }
 
 
-int	ft_get_map_char(t_game *game) 
+char	**ft_get_map_char(t_game *game)
 {
 	int		i;
+	char	**map;
 
 	game->map_fd = open(game->map_url, O_RDONLY);
 	if (game->map_fd == -1)
-		return (free(game), -1);
-	game->map = (char **)malloc(sizeof(char *) * game->map_heigth + 1);
-	if (!game->map)
-		return (free(game), -1);// APARTIR DE AQUI AY QUE LIVERAR GAME->MAP*
+		return (free(game), NULL);
+	map = (char **)malloc(sizeof(char *) * game->map_heigth + 1);
+	if (!map)
+		return (free(game), NULL);// APARTIR DE AQUI AY QUE LIVERAR GAME->MAP*
 	i = 0;
 	while (i <= game->map_heigth)
 	{
-		game->map[i] = get_next_line(game->map_fd);
+		map[i] = get_next_line(game->map_fd);
 		i++;
 	}
-	ft_count_objects_map(game);
-	return (0);
+	close(game->map_fd);
+	return (map);
 }
 
+void	ft_get_player_position(t_game *game)
+{
+	int x;
+	int	y;
 
+	x = 0;	
+	while (game->map[x])
+	{
+		y = 0;
+		while (game->map[x][y])
+		{
+			if (game->map[x][y] == 'P')
+			{
+				game->player_pos[0] = x;
+				game->player_pos[1] = y;
+			}
+			y ++;
+		}
+		x ++;
+	}
+}
+
+int	ft_flood_fill(t_game *game)
+{
+	char **map_cpy;
+
+	map_cpy = ft_get_map_char(game);
+	
+}
 
 int	main(int argc, char **argv)
 {
@@ -193,10 +222,13 @@ int	main(int argc, char **argv)
 		return (-1);
 	if (ft_get_map_h_w(game) == -1)
 		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
-	if (ft_get_map_char(game) == -1)
-		return (ft_printf("Geting the map has fail"), -1);
-
+	game->map = ft_get_map_char(game);
+	if (!game->map)
+		return (ft_printf("Problem geting the map"), -1);
+	ft_count_objects_map(game);
 	ft_verify_invalid_map_chars(game);
+	ft_get_player_position(game);
+	
 
 	printf("Coins: %i \n", game->coins_count);
 	printf("Player: %i \n", game->player_count);
@@ -206,6 +238,9 @@ int	main(int argc, char **argv)
 	printf("Alto del mapa: %i\n", game->map_heigth);
 	printf("Estado del fd: %i\n", game->map_fd);
 	printf("Direcion del fd: %s\n", game->map_url);
+	printf("Player position x: %i\n", game->player_pos[0]);
+	printf("Player position y: %i\n", game->player_pos[1]);
+
 	
 }
 

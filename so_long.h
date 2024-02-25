@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/24 19:26:01 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:09:47 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct t_game //maloqueado desde el inicio
 
 	int		x;
 	int		y;
-
+	int		player_pos[2];
 
 	int coins_count;
 	int exit_count;
