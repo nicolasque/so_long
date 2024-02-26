@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 10:45:25 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:27:10 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_manage_input(int argc, char **argv, t_game *game)
 
 	if (argc != 2)
 		return (ft_printf("Wrong cuantity of args\n"),free(game) , -1);
-	if (ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) == NULL)
+	if (ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) == NULL || ft_strlen(argv[1]) <= 4)
 		return (ft_printf("Map is not .ber\n"),free(game) , -1);
 	game->map_fd = open(argv[1], O_RDONLY); //Este se cerrara en ft_get_map_h_w
 	if (game->map_fd < 0 || read(game->map_fd, try_to_read, 0) < 0)
@@ -127,9 +127,9 @@ int ft_verify_obj_count(t_game *game)
 {
 	if (game->coins_count < 1)
 		return (ft_free_2d(game->map), free(game), ft_printf("Not enoug coins"), -1);
-	else if (game->exit_count != 1)
+	if (game->exit_count != 1)
 		return (ft_free_2d(game->map), free(game), ft_printf("Invalid exit num"), -1);
-	else if (game->player_count != 1)
+	if (game->player_count != 1)
 		return (ft_free_2d(game->map), free(game), ft_printf("Invalid player num"), -1);
 	else
 		return (0);
@@ -141,10 +141,13 @@ void	ft_count_objects_map(t_game *game)
 	int	x;
 
 	x = 0;
+	game->player_count = 0;
+	game->coins_count = 0;
+	game->exit_count = 0;
 	while(game->map[x])
 	{
-		game->coins_count += ft_count_objects_line(game->map[x], 'C');
 		game->player_count += ft_count_objects_line(game->map[x], 'P');
+		game->coins_count += ft_count_objects_line(game->map[x], 'C');
 		game->exit_count += ft_count_objects_line(game->map[x], 'E');
 		x ++;
 	}
@@ -229,19 +232,19 @@ void	ft_flood_fill(t_game *game, int x, int y)
 	ft_flood_fill(game, x + 1, y);
 }
 
-int	ft_check_after_flod(t_game *game)
-{
-	int	x;
+// int	ft_check_after_flod(t_game *game)
+// {
+// 	int	x;
 
-	x = 0;
-	while (game->map_cpy)
-	{
-		if (ft_count_objects_line(game->map_cpy[x], 'C') || \
-		ft_count_objects_line(game->map_cpy[x], 'P') || \
-		ft_count_objects_line(game->map_cpy[x], 'E'))
-			return (-1); //TODO CERRAR COPY MAP Y GAME	
-	}
-}
+// 	x = 0;
+// 	while (game->map_cpy)
+// 	{
+// 		if (ft_count_objects_line(game->map_cpy[x], 'C') || \
+// 		ft_count_objects_line(game->map_cpy[x], 'P') || \
+// 		ft_count_objects_line(game->map_cpy[x], 'E'))
+// 			return (-1); //TODO CERRAR COPY MAP Y GAME	
+// 	}
+// }
 
 
 int	main(int argc, char **argv)
@@ -254,20 +257,21 @@ int	main(int argc, char **argv)
 	if (ft_get_map_h_w(game) == -1)
 		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
 	game->map = ft_get_map_char(game);
+	ft_print_map(game->map);
 	if (!game->map)
 		return (ft_printf("Problem geting the map"), -1);
 	ft_count_objects_map(game);
+	printf("Player: %i \n", game->player_count);
+	
 	if (ft_verify_invalid_map_chars(game) == -1)
 		return (-1);
 	ft_get_player_position(game);
 	ft_map_copy(game);
-	ft_print_map(game->map_cpy);
 	ft_printf("\n");
 	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
 	ft_print_map(game->map_cpy);
 
 	printf("Coins: %i \n", game->coins_count);
-	printf("Player: %i \n", game->player_count);
 	printf("Exit no : %i \n", game->exit_count);
 	printf("Player position x: %i\n", game->player_pos[0]);
 	printf("Player position y: %i\n", game->player_pos[1]);
