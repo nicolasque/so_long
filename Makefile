@@ -10,7 +10,7 @@ MLX = .mlx/libmlx.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -Llibft -lft -L.mlx -lmlx
+	$(CC) $(CFLAGS) -o $(NAME)  -Llibft -lft -L.mlx -lmlx -framework OpenGL -framework AppKit $(OBJ)
 
 $(LIBFT):
 	make -C libft
@@ -19,7 +19,7 @@ $(MLX):
 	make -C .mlx
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

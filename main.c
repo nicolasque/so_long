@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/22 20:00:29 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:19:49 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ int	ft_manage_input(int argc, char **argv, t_game *game)
 	char	try_to_read[2];
 
 	if (argc != 2)
-		return (ft_printf("Wrong cuantity of args\n"), -1);
+		return (ft_printf("Wrong cuantity of args\n"),free(game) , -1);
 	if (ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) == NULL)
-		return (ft_printf("Map is not .ber\n"), -1);
+		return (ft_printf("Map is not .ber\n"),free(game) , -1);
 	game->map_fd = open(argv[1], O_RDONLY); //Este se cerrara en ft_get_map_h_w
 	if (game->map_fd < 0 || read(game->map_fd, try_to_read, 0) < 0)
-		return (ft_printf("Problem opening the fd"), close(game->map_fd), -1);
+		return (ft_printf("Problem opening the fd"), close(game->map_fd),
+		free(game) , -1);
 	game->map_url = argv[1];
 	return (0);
 }
@@ -109,6 +110,16 @@ int	ft_get_map_char(t_game *game)
 	return (0);
 }
 
+// int	ft_launch_window(t_game *game)
+// {
+// 	game->mlx = mlx_init();
+// 	printf("mlx_init() returned %i\n", (int)game->mlx);
+
+// 	game->window = mlx_new_window(game->mlx,640, 480, "Mi ventana");
+
+// 	return (0);
+// }
+
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -120,6 +131,7 @@ int	main(int argc, char **argv)
 		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
 	if (ft_get_map_char(game) == -1)
 		return (ft_printf("Geting the map has fail"), -1);
+	// ft_launch_window(game); //TODO HACER QUE FUNCIONE LAVENTANA
 	// printf("Anco del mapa: %i\n", game->map_with);
 	// printf("Alto del mapa: %i\n", game->map_heigth);
 	// printf("Estado del fd: %i\n", game->map_fd);
