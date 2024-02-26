@@ -1,6 +1,6 @@
 # Variables
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 NAME = a.out
 SRC = main.c
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 18:52:45 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 21:16:15 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int ft_free_2d(char **arr)
 		free (arr[i]);
 		i++;
 	}
-	return (free(arr), 0);
+	return (0);
 }
 
 int	ft_map_whith(char *line)
@@ -255,7 +255,7 @@ int	ft_check_after_flod(t_game *game)
 	return (0);
 }
 
-void	ft_get_sprites(t_game *game)
+int	ft_get_sprites(t_game *game)
 {
 	int	x;
 	int	y;
@@ -265,7 +265,10 @@ void	ft_get_sprites(t_game *game)
 	game->chest = mlx_xpm_file_to_image(game->mlx, "textures/chest(C).xpm", &x, &y);
 	game->port = mlx_xpm_file_to_image(game->mlx, "textures/port(E).xpm", &x, &y);
 	game->ship = mlx_xpm_file_to_image(game->mlx, "textures/ship(P).xpm", &x, &y);
-	
+	if (!game->water || !game->border || !game->chest || !game->port
+		|| !game->ship)
+	return (ft_printf("Error\nFalta alguna textura\n"),ft_free_2d(game->map), free(game) , exit(-1), -1);
+	return (0);
 }
 
 void	ft_put_sprite(t_game *game,char c, int y, int x)
@@ -273,18 +276,23 @@ void	ft_put_sprite(t_game *game,char c, int y, int x)
 	mlx_put_image_to_window(game->mlx, game->window, game->water, PIXEL * x, PIXEL * y);
 	if (c == '0')
 		mlx_put_image_to_window(game->mlx, game->window, game->water, PIXEL * x, PIXEL * y);
-	if (c == '1')
+	else if (c == '1')
 		mlx_put_image_to_window(game->mlx, game->window, game->border, PIXEL * x, PIXEL * y);
-	if (c == 'C')
+	else if (c == 'C')
 		mlx_put_image_to_window(game->mlx, game->window, game->chest, PIXEL * x, PIXEL * y);
-	if (c == 'E')
+	else if (c == 'E')
 		mlx_put_image_to_window(game->mlx, game->window, game->port, PIXEL * x, PIXEL * y);
-	if (c == 'P')
-		mlx_put_image_to_window(game->mlx, game->window, game->ship, PIXEL * x, PIXEL * y);
+	// if (c == 'P')
+	// 	mlx_put_image_to_window(game->mlx, game->window, game->ship, PIXEL * x, PIXEL * y);
 
 }
 
-void	ft_drax_map(t_game *game)
+void	ft_put_player(t_game *game, int y, int x)
+{
+	mlx_put_image_to_window(game->mlx, game->window, game->ship, PIXEL * x, PIXEL * y);
+}
+
+void	ft_drau_map(t_game *game)
 {
 	int	x;
 	int	y;
@@ -297,12 +305,63 @@ void	ft_drax_map(t_game *game)
 		while (x < game->map_heigth)
 		{
 			ft_put_sprite(game, game->map[x][y] ,x, y);
+			ft_put_player(game, game->player_pos[0], game->player_pos[1]);
 			x ++;
 		}
 		y ++;
 	}
 }
 
+void	ft_free_textures(t_game *game)
+{
+	if (game->ship)
+		mlx_destroy_image(game->mlx, game->ship);
+	if (game->water)
+		mlx_destroy_image(game->mlx, game->water);
+	if (game->chest)
+		mlx_destroy_image(game->mlx, game->chest);
+	if (game->port)
+		mlx_destroy_image(game->mlx, game->port);
+	if (game->border)
+		mlx_destroy_image(game->mlx, game->border);
+}
+
+int	ft_on_close(t_game *game)
+{
+	ft_free_textures(game);
+	ft_free_2d(game->map);
+	free(game);
+	exit(0);
+	return (0);
+}
+int	ft_key_hook(int key_code, t_game *game)
+{
+	if (key_code == ESC)
+		ft_on_close(game);
+	if ((key_code == W || key_code == UP) && 
+			game->map[game->player_pos[0] - 1][game->player_pos[1]] != '1')
+		game->player_pos[0]--;
+	if ((key_code == A || key_code == LEFT) && 
+			game->map[game->player_pos[0]][game->player_pos[1] - 1] != '1')
+		game->player_pos[1]--;
+	if ((key_code == S || key_code == DOWN) && 
+			game->map[game->player_pos[0] + 1][game->player_pos[1]] != '1')
+		game->player_pos[0]++;
+	if ((key_code == D || key_code == RIGHT) && 
+			game->map[game->player_pos[0]][game->player_pos[1] + 1] != '1')
+		game->player_pos[1]++;
+	if (game->map[game->player_pos[0]][game->player_pos[1]] == 'C')
+	{
+		game->coins_count--;
+		game->map[game->player_pos[0]][game->player_pos[1]] = '0';
+	}
+	ft_printf("Moves: %i\n", game->moves++);
+	if (game->coins_count == 0 && 
+			game->map[game->player_pos[0]][game->player_pos[1]] == 'E')
+		ft_drau_map(game);
+		ft_on_close(game);
+	return (0);
+}
 
 void	ft_game_starter(t_game *game)
 {
@@ -310,9 +369,10 @@ void	ft_game_starter(t_game *game)
 	game->moves = 0;
 	game->window = mlx_new_window(game->mlx, game->map_with * PIXEL, game->map_heigth * PIXEL, "SO_LONG");
 	ft_get_sprites(game);
-	ft_drax_map(game);
+	ft_drau_map(game);
+	mlx_hook(game->window, 17, 0, ft_on_close, game);
+	mlx_key_hook(game->window, ft_key_hook, game);
 	mlx_loop (game->mlx);
-
 }
 
 int	main(int argc, char **argv)
@@ -339,16 +399,17 @@ int	main(int argc, char **argv)
 	ft_game_starter(game);
 
 
-	printf("Player: %i \n", game->player_count);
-	printf("Coins: %i \n", game->coins_count);
-	printf("Exit no : %i \n", game->exit_count);
-	printf("Player position x: %i\n", game->player_pos[0]);
-	printf("Player position y: %i\n", game->player_pos[1]);
-	printf("Alto del mapa: %i\n", game->map_heigth);
-	printf("Anco del mapa: %i\n", game->map_with);
-	printf("Estado del fd: %i\n", game->map_fd);
-	printf("Direcion del fd: %s\n", game->map_url);
-	printf("whater sprite: %s", game->water);
+	// printf("Player: %i \n", game->player_count);
+	// printf("Coins: %i \n", game->coins_count);
+	// printf("Exit no : %i \n", game->exit_count);
+	// printf("Player position x: %i\n", game->player_pos[0]);
+	// printf("Player position y: %i\n", game->player_pos[1]);
+	// printf("Alto del mapa: %i\n", game->map_heigth);
+	// printf("Anco del mapa: %i\n", game->map_with);
+	// printf("Estado del fd: %i\n", game->map_fd);
+	// printf("Direcion del fd: %s\n", game->map_url);
+	// printf("whater sprite: %s", game->water);
+	return (0);
 }
 
 // Aparti de ahora hay que hacer free de la estructura GAME si se sale del programa
