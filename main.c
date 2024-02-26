@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 12:27:10 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:58:36 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,19 +232,28 @@ void	ft_flood_fill(t_game *game, int x, int y)
 	ft_flood_fill(game, x + 1, y);
 }
 
-// int	ft_check_after_flod(t_game *game)
-// {
-// 	int	x;
+int	ft_check_after_flod(t_game *game)
+{
+	int	x;
 
-// 	x = 0;
-// 	while (game->map_cpy)
-// 	{
-// 		if (ft_count_objects_line(game->map_cpy[x], 'C') || \
-// 		ft_count_objects_line(game->map_cpy[x], 'P') || \
-// 		ft_count_objects_line(game->map_cpy[x], 'E'))
-// 			return (-1); //TODO CERRAR COPY MAP Y GAME	
-// 	}
-// }
+	x = 0;
+	while (game->map_cpy[x])
+	{
+		if (ft_count_objects_line(game->map_cpy[x], 'C') || \
+		ft_count_objects_line(game->map_cpy[x], 'P') || \
+		ft_count_objects_line(game->map_cpy[x], 'E'))
+		{
+			ft_free_2d(game->map_cpy);
+			ft_free_2d(game->map);
+			free(game);
+			ft_printf("No valida map");
+			exit(-1);
+		}
+		x++;
+	}
+	ft_free_2d(game->map_cpy);
+	return (0);
+}
 
 
 int	main(int argc, char **argv)
@@ -257,36 +266,30 @@ int	main(int argc, char **argv)
 	if (ft_get_map_h_w(game) == -1)
 		return (ft_printf("Problema con get map (de momento solo h/w)\n"));
 	game->map = ft_get_map_char(game);
-	ft_print_map(game->map);
 	if (!game->map)
 		return (ft_printf("Problem geting the map"), -1);
 	ft_count_objects_map(game);
-	printf("Player: %i \n", game->player_count);
-	
 	if (ft_verify_invalid_map_chars(game) == -1)
 		return (-1);
 	ft_get_player_position(game);
 	ft_map_copy(game);
-	ft_printf("\n");
+	// ft_print_map(game->map_cpy);
 	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
-	ft_print_map(game->map_cpy);
+	ft_check_after_flod(game); //No hace falta liberar map cpy despuesd e de esto
+	//ft_print_map(game->map_cpy); //NO FUNCIONA POR QUE EL CPY YA ESTA LIVERADO
+	
 
+	printf("Player: %i \n", game->player_count);
 	printf("Coins: %i \n", game->coins_count);
 	printf("Exit no : %i \n", game->exit_count);
 	printf("Player position x: %i\n", game->player_pos[0]);
 	printf("Player position y: %i\n", game->player_pos[1]);
 	printf("Alto del mapa: %i\n", game->map_heigth);
 	printf("Anco del mapa: %i\n", game->map_with);
-	
 	printf("Estado del fd: %i\n", game->map_fd);
 	printf("Direcion del fd: %s\n", game->map_url);
 	printf("Direcion del fd: %s\n", game->map_url);
-
-	
 }
 
 // Aparti de ahora hay que hacer free de la estructura GAME si se sale del programa
 //el Progrma siempre abre el fd al principio
-
-
-//BATERIA DE COMPROBACIONES 
