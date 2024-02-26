@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 12:58:36 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:36:40 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,29 @@ int	ft_check_after_flod(t_game *game)
 	return (0);
 }
 
+int	ft_get_sprites(t_game *game)
+{
+	int	x;
+	int	y;
+
+	game->
+}
+
+// ft_drax_map(t_game *game)
+// {
+	
+// }
+
+
+void	ft_game_starter(t_game *game)
+{
+	game->mlx = mlx_init();
+	game->moves = 0;
+	game->window = mlx_new_window(game->mlx, game->map_heigth * PIXEL, game->map_with * PIXEL, "SO_LONG");
+
+	mlx_loop (game->mlx);
+
+}
 
 int	main(int argc, char **argv)
 {
@@ -277,7 +300,8 @@ int	main(int argc, char **argv)
 	ft_flood_fill(game, game->player_pos[0], game->player_pos[1]);
 	ft_check_after_flod(game); //No hace falta liberar map cpy despuesd e de esto
 	//ft_print_map(game->map_cpy); //NO FUNCIONA POR QUE EL CPY YA ESTA LIVERADO
-	
+	ft_game_starter(game);
+
 
 	printf("Player: %i \n", game->player_count);
 	printf("Coins: %i \n", game->coins_count);
@@ -288,7 +312,7 @@ int	main(int argc, char **argv)
 	printf("Anco del mapa: %i\n", game->map_with);
 	printf("Estado del fd: %i\n", game->map_fd);
 	printf("Direcion del fd: %s\n", game->map_url);
-	printf("Direcion del fd: %s\n", game->map_url);
+	printf("whater sprite: %s", game->water);
 }
 
 // Aparti de ahora hay que hacer free de la estructura GAME si se sale del programa

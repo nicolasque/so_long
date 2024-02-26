@@ -1,0 +1,20 @@
+/* xpm - bitmap format */
+static char *port_xpm[] = {
+"16 16 5 1",
+"   c None",
+"#  c #999999",
+"X  c #DDDDDD",
+"o  c #000000",
+"."  c #00CCFF",
+"XXXXXXXXXXXXXXX",
+"#XX###XX###XX#",
+"X###X###X###X#",
+"#X#X###X#X#X#",
+"X#X###X#X#X#",
+"#X#X###X#X#X#",
+"X###X###X###X#",
+"#X#X###X#X#X#",
+"X#X###X#X#X#",
+"#X#X###X#X#X#",
+"XXXXXXXXXXXXXXX"
+};

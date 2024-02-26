@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 10:43:30 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:33:36 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include ".mlx/mlx.h"
 # include "libft/libft.h"
 
+# define PIXEL 32
 
 typedef struct t_game //maloqueado desde el inicio
 {
@@ -35,9 +36,13 @@ typedef struct t_game //maloqueado desde el inicio
 	int		map_heigth;
 	int		map_with;
 
-	int		x;
-	int		y;
+	void	*ship;
+	void	*water;
+	void	*chest;
+	void	*portal;
+
 	int		player_pos[2];
+	int		moves;	
 
 	int coins_count;
 	int exit_count;
