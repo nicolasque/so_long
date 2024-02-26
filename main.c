@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 16:36:40 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:52:45 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,26 +255,62 @@ int	ft_check_after_flod(t_game *game)
 	return (0);
 }
 
-int	ft_get_sprites(t_game *game)
+void	ft_get_sprites(t_game *game)
 {
 	int	x;
 	int	y;
 
-	game->
+	game->water = mlx_xpm_file_to_image(game->mlx, "textures/water(0).xpm", &x, &y);
+	game->border = mlx_xpm_file_to_image(game->mlx, "textures/border(1).xpm", &x, &y);
+	game->chest = mlx_xpm_file_to_image(game->mlx, "textures/chest(C).xpm", &x, &y);
+	game->port = mlx_xpm_file_to_image(game->mlx, "textures/port(E).xpm", &x, &y);
+	game->ship = mlx_xpm_file_to_image(game->mlx, "textures/ship(P).xpm", &x, &y);
+	
 }
 
-// ft_drax_map(t_game *game)
-// {
-	
-// }
+void	ft_put_sprite(t_game *game,char c, int y, int x)
+{
+	mlx_put_image_to_window(game->mlx, game->window, game->water, PIXEL * x, PIXEL * y);
+	if (c == '0')
+		mlx_put_image_to_window(game->mlx, game->window, game->water, PIXEL * x, PIXEL * y);
+	if (c == '1')
+		mlx_put_image_to_window(game->mlx, game->window, game->border, PIXEL * x, PIXEL * y);
+	if (c == 'C')
+		mlx_put_image_to_window(game->mlx, game->window, game->chest, PIXEL * x, PIXEL * y);
+	if (c == 'E')
+		mlx_put_image_to_window(game->mlx, game->window, game->port, PIXEL * x, PIXEL * y);
+	if (c == 'P')
+		mlx_put_image_to_window(game->mlx, game->window, game->ship, PIXEL * x, PIXEL * y);
+
+}
+
+void	ft_drax_map(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	x = 0;
+	while (y < game->map_with)
+	{
+		x = 0;
+		while (x < game->map_heigth)
+		{
+			ft_put_sprite(game, game->map[x][y] ,x, y);
+			x ++;
+		}
+		y ++;
+	}
+}
 
 
 void	ft_game_starter(t_game *game)
 {
 	game->mlx = mlx_init();
 	game->moves = 0;
-	game->window = mlx_new_window(game->mlx, game->map_heigth * PIXEL, game->map_with * PIXEL, "SO_LONG");
-
+	game->window = mlx_new_window(game->mlx, game->map_with * PIXEL, game->map_heigth * PIXEL, "SO_LONG");
+	ft_get_sprites(game);
+	ft_drax_map(game);
 	mlx_loop (game->mlx);
 
 }

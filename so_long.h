@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:32:21 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 16:33:36 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:55:03 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct t_game //maloqueado desde el inicio
 	void	*ship;
 	void	*water;
 	void	*chest;
-	void	*portal;
+	void	*port;
+	void	*border;
 
 	int		player_pos[2];
 	int		moves;	
