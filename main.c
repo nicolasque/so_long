@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/26 10:43:51 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/26 10:45:25 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ int	main(int argc, char **argv)
 	printf("Anco del mapa: %i\n", game->map_with);
 	
 	printf("Estado del fd: %i\n", game->map_fd);
+	printf("Direcion del fd: %s\n", game->map_url);
 	printf("Direcion del fd: %s\n", game->map_url);
 
 	
