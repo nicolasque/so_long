@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:19:57 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:24:28 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:07:25 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_get_p_position(t_game *g)
 	int	x;
 	int	y;
 
-	x = 0;	
+	x = 0;
 	while (g->map[x])
 	{
 		y = 0;
@@ -62,14 +62,3 @@ void	ft_get_p_position(t_game *g)
 		x ++;
 	}
 }
-
-// void	ft_print_map(char **map)
-// {
-// 	int i;
-// 	i = 0;
-// 	while (map[i])
-// 	{
-// 		ft_printf("%s", map[i]);
-// 		i++;
-// 	}
-// }

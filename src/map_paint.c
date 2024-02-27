@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:28:50 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:32:59 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:07:01 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_get_sprites(t_game *g)
 		|| !g->ship)
 	{
 		ft_printf("Error\nFalta alguna textura\n");
-		return (ft_free_2d(g->map), free(g) , exit(-1), -1);
+		return (ft_free_2d(g->map), free(g), exit(-1), -1);
 	}
 	return (0);
 }
@@ -35,7 +35,8 @@ static void	ft_put_player(t_game *g, int y, int x)
 {
 	mlx_put_image_to_window(g->mlx, g->window, g->ship, PIX * x, PIX * y);
 }
-static void	ft_put_sprite(t_game *g,char c, int y, int x)
+
+static void	ft_put_sprite(t_game *g, char c, int y, int x)
 {
 	mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * x, PIX * y);
 	if (c == '0')
@@ -60,7 +61,7 @@ void	ft_drau_map(t_game *g)
 		x = 0;
 		while (x < g->heigth)
 		{
-			ft_put_sprite(g, g->map[x][y] ,x, y);
+			ft_put_sprite(g, g->map[x][y], x, y);
 			ft_put_player(g, g->p_pos[0], g->p_pos[1]);
 			x ++;
 		}
