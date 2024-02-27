@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:05:59 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:33:07 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	main(int argc, char **argv)
 	if (!g)
 		return (ft_printf("Game malloc fail"), -1);
 	ft_manage_input(argc, argv, g);
-	if (ft_get_map_h_w(g) == -1)
-		return (ft_printf("Problema con get map\n"));
+	ft_get_map_h_w(g);
 	g->map = ft_get_map_char(g);
 	if (!g->map)
 		return (ft_printf("Problem geting the map"), -1);

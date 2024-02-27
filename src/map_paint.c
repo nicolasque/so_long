@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:28:50 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:07:01 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:31:05 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int	ft_get_sprites(t_game *g)
 	g->chest = mlx_xpm_file_to_image(g->mlx, CHEST, &x, &y);
 	g->port = mlx_xpm_file_to_image(g->mlx, PORT, &x, &y);
 	g->ship = mlx_xpm_file_to_image(g->mlx, SHIP, &x, &y);
-	if (!g->water || !g->border || !g->chest || !g->port
-		|| !g->ship)
+	if (!g->water || !g->border || !g->chest || !g->port || !g->ship)
 	{
-		ft_printf("Error\nFalta alguna textura\n");
+		ft_printf("Error: Texture mising\n");
 		return (ft_free_2d(g->map), free(g), exit(-1), -1);
 	}
 	return (0);

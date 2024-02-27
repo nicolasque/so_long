@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:11:51 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:17:20 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:32:48 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	ft_get_map_h_w(t_game *g)
 
 	line = get_next_line(g->map_fd);
 	if (!line)
-		return (ft_printf("Invalid map"), free(g), -1);
+		return (ft_printf("Invalid map"), free(g),exit(-1) , -1);
 	g->with = ft_map_whith(line);
 	g->heigth = 0;
 	while (line)
 	{
 		if (g->with != ft_map_whith(line))
-			return (ft_printf("Invalid map"), free(line), free(g), -1);
+			return (ft_printf("Invalid map"), free(line), free(g),exit(-1) , -1);
 		g->heigth ++;
 		line = get_next_line(g->map_fd);
 		if (!line)
