@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 04:54:34 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:33:11 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:02:26 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,7 +373,7 @@ void	ft_game_starter(t_game *g)
 	g->window = mlx_new_window(g->mlx, g->with * PIX, g->heigth * PIX, "SO_LONG");
 	ft_get_sprites(g);
 	ft_drau_map(g);
-	mlx_hook(g->window, 17, 0, ft_on_close, g);
+	mlx_hook(g->window, 17, 1, ft_on_close, g);
 	mlx_key_hook(g->window, ft_key_hook, g);
 	mlx_loop (g->mlx);
 }

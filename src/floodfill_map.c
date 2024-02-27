@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:22:56 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:25:28 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:03:23 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	ft_map_copy(t_game *g)
 
 void	ft_flood_fill(t_game *g, int x, int y)
 {
-	if (x >= g->heigth || y >= g->with || x <= 0 || y <= 0 || g->map_cpy[x][y] == 'x')
+	if (x >= g->heigth || y >= g->with || x <= 0 || \
+			y <= 0 || g->map_cpy[x][y] == 'x')
 		return ;
-	if (g->map_cpy[x][y] == '0' || g->map_cpy[x][y] == 'P' || g->map_cpy[x][y] == 'E' || g->map_cpy[x][y] == 'C')
+	if (g->map_cpy[x][y] == '0' || g->map_cpy[x][y] == 'P' || \
+			g->map_cpy[x][y] == 'E' || g->map_cpy[x][y] == 'C')
 		g->map_cpy[x][y] = 'x';
 	if (g->map_cpy[x][y] == '1')
 		return ;
@@ -53,4 +55,3 @@ int	ft_check_after_flod(t_game *g)
 	ft_free_2d(g->map_cpy);
 	return (0);
 }
-

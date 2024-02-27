@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:11:51 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:15:20 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:03:43 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	ft_map_whith(char *line)
 		i ++;
 	return (i);
 }
-
 
 // Me ocupo dentro de la funcion de 
 // liverar si aloqeo nueva memoriia y 

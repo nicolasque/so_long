@@ -6,14 +6,15 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:27:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 16:28:10 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:05:10 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
 static void	ft_move_palyer(t_game *g, int x, int y)
-{	if (g->map[g->p_pos[0] + x][g->p_pos[1] + y] != '1')
+{
+	if (g->map[g->p_pos[0] + x][g->p_pos[1] + y] != '1')
 	{
 		if (x)
 			g->p_pos[0] += x;
