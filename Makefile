@@ -1,6 +1,6 @@
 # Variables
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
 NAME = so_long
 SRC =	src/main.c \
 		src/floodfill_map.c \
