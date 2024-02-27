@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:11:51 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:03:43 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:17:20 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**ft_get_map_char(t_game *g)
 	g->map_fd = open(g->map_url, O_RDONLY);
 	if (g->map_fd == -1)
 		return (free(g), NULL);
-	map = (char **)malloc(sizeof(char *) * g->heigth + 1);
+	map = (char **)malloc(sizeof(char *) * (g->heigth + 1));
 	if (!map)
 		return (free(g), NULL);
 	i = 0;

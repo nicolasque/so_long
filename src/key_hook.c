@@ -6,7 +6,7 @@
 /*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:27:08 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:05:10 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:18:21 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_move_palyer(t_game *g, int x, int y)
 			g->p_pos[0] += x;
 		else
 			g->p_pos[1] += y;
-		ft_printf("Moves: %i\n", g->moves++);
+		ft_printf("Moves: %i\n", ++g->moves);
 	}
 	else
 		return ;
