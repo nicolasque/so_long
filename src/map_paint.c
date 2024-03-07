@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_paint.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nquecedo <nquecedo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nquecedo <nquecedo@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:28:50 by nquecedo          #+#    #+#             */
-/*   Updated: 2024/02/27 17:31:05 by nquecedo         ###   ########.fr       */
+/*   Updated: 2024/03/06 02:50:44 by nquecedo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void	ft_put_player(t_game *g, int y, int x)
 
 static void	ft_put_sprite(t_game *g, char c, int y, int x)
 {
-	mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * x, PIX * y);
-	if (c == '0')
-		mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * x, PIX * y);
-	else if (c == '1')
+	// mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * x, PIX * y);
+	// if (c == '0')
+		// mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * x, PIX * y);
+	if (c == '1')
 		mlx_put_image_to_window(g->mlx, g->window, g->border, PIX * x, PIX * y);
 	else if (c == 'C')
 		mlx_put_image_to_window(g->mlx, g->window, g->chest, PIX * x, PIX * y);
@@ -55,15 +55,17 @@ void	ft_drau_map(t_game *g)
 
 	y = 0;
 	x = 0;
-	while (y < g->with)
+
+	while (x < g->heigth)
 	{
-		x = 0;
-		while (x < g->heigth)
+		y = 0;
+		while (y < g->with)
 		{
+			mlx_put_image_to_window(g->mlx, g->window, g->water, PIX * y, PIX * x);
 			ft_put_sprite(g, g->map[x][y], x, y);
 			ft_put_player(g, g->p_pos[0], g->p_pos[1]);
-			x ++;
+			y ++;
 		}
-		y ++;
+		x ++;
 	}
 }
